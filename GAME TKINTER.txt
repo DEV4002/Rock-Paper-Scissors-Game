@@ -1,0 +1,68 @@
+from tkinter import*
+import random
+
+# Initialize scores
+user_score = 0
+computer_score = 0
+
+# Function to determine the computer's choice
+def computer_choice():
+    return random.choice(['Rock', 'Paper', 'Scissors'])
+
+# Function to determine the winner
+def determine_winner(user, computer):
+    global user_score, computer_score
+    if user == computer:
+        return "It's a tie!"
+    elif (user == 'Rock' and computer == 'Scissors') or \
+         (user == 'Scissors' and computer == 'Paper') or \
+         (user == 'Paper' and computer == 'Rock'):
+        user_score += 1
+        return "You win!"
+    else:
+        computer_score += 1
+        return "Computer wins!"
+
+# Function to play a round of Rock-Paper-Scissors
+def play_round(user_choice):
+    comp_choice = computer_choice()
+    result = determine_winner(user_choice, comp_choice)
+    result_label.config(text=f"Your choice: {user_choice}\nComputer's choice: {comp_choice}\nResult: {result}")
+    score_label.config(text=f"Your Score: {user_score}  Computer's Score: {computer_score}")
+
+# Function to reset the game
+def reset_game():
+    global user_score, computer_score
+    user_score = 0
+    computer_score = 0
+    result_label.config(text="")
+    score_label.config(text="Your Score: 0  Computer's Score: 0")
+
+# Create the main window
+w = Tk()
+w.title("Rock-Paper-Scissors Game")
+
+# Create labels, buttons and result display
+h1 = Label(w,text="Choose Rock, Paper or Scissors:",borderwidth=5,relief="raise",bg="aqua")
+h1.grid(row= 1, column=1,columnspan =7) 
+
+h2=Button(w, text="Rock", command=lambda: play_round('Rock'),borderwidth=5,bg="yellow")
+h2.grid(row =2,column =1, columnspan=2)
+#############################################
+h3 =Button(w, text="Paper", command=lambda: play_round('Paper'),borderwidth=5,bg="Red")
+h3.grid(row = 2,column = 3, columnspan= 2)
+#####################################################
+h4 =Button(w, text="Scissors", command=lambda: play_round('Scissors'),borderwidth=5,bg="green")
+h4.grid(row =2, column = 5, columnspan =3)
+######################################################
+h5 =Label(w,text=" ")
+h5.grid(row=3,column =2,columnspan =3)
+###########################################################
+h6 = Label(w, text="Your Score: 0  Computer's Score: 0",borderwidth=5,relief="raise",bg="aqua")
+h6.grid(row=4,column=1,columnspan=6)
+##########################################################################
+h7=Button(w, text="Play Again", command=reset_game,borderwidth=5,bg="yellow")
+h7.grid(row=5,column= 2,columnspan= 4)
+
+# Run the Tkinter event loop
+w.mainloop()
